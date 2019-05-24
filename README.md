@@ -7,8 +7,8 @@ We recommend adding them to `C:\tools\updater` (create that directory if necessa
 
 ## To Run
 simply run the following command in cmd or powershell
-
+> Ensure you run the command with administrative or elevated priviledges
 ```cmd
 >> upd
 ```
-> Ensure you run the command with administrative or elevated priviledges
+
