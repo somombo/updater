@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "Updating Nodejs and NPM ..."
+choco upgrade nodejs-lts
+npm-windows-upgrade --no-spinner --version=latest 
+npm update --global
+
+echo "Updating Conda ..."
+choco upgrade miniconda3
+conda update --name=root conda
+conda update --all --yes
+
+echo "Updating the rest of the Choco packages ..."
+choco upgrade all
