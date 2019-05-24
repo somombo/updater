@@ -1,14 +1,36 @@
 #!/bin/sh
 
+err_code=1
+
 echo "Updating Nodejs and NPM ..."
-choco upgrade nodejs-lts
-npm-windows-upgrade --no-spinner --version=latest 
+choco upgrade nodejs-lts --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
+
+npm-windows-upgrade --no-spinner --version=latest
+if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
+
 npm update --global
+if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
+
+
 
 echo "Updating Conda ..."
-choco upgrade miniconda3
+choco upgrade miniconda3 --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
+
 conda update --name=root conda
+if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
+
 conda update --all --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 
 echo "Updating the rest of the Choco packages ..."
-choco upgrade all
+choco upgrade all --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
+
+if [ $err_code -ne 1 ]; then
+    echo "$(date) |> FAIED with Error Code: $err_code" >> $(dirname "$0")/updater_status.log
+	exit $err_code
+else
+	echo "$(date) |> SUCCESS" >> $(dirname "$0")/updater_status.log
+fi
