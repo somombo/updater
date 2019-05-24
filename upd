@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
 if [ $err_code -ne 1 ]; then
     echo "$(date) |> FAIED with Error Code: $err_code" >> $(dirname "$0")/updater_status.log
-	exit $err_code
+    exit $err_code
 else
-	echo "$(date) |> SUCCESS" >> $(dirname "$0")/updater_status.log
+    echo "$(date) |> SUCCESS" >> $(dirname "$0")/updater_status.log
 fi
