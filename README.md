@@ -8,6 +8,6 @@ We recommend adding them to `C:\tools\updater` (create that directory if necessa
 ## To Run
 simply run the following command in cmd or powershell
 
-```
-upd
+```cmd
+>> upd
 ```
