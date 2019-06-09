@@ -2,7 +2,7 @@
 
 err_code=1
 
-echo "Updating Nodejs and NPM ..."
+echo ">>> Updating Nodejs and NPM <<<"
 choco upgrade nodejs-lts --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
@@ -14,17 +14,17 @@ if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
 
 
 
-echo "Updating Conda ..."
+echo ">>> Updating Conda <<<"
 choco upgrade miniconda3 --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
 
-conda update --name=root conda
+conda update --name=root conda --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 
 conda update --all --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 
-echo "Updating the rest of the Choco packages ..."
+echo ">>> Updating the rest of the Choco packages <<<"
 choco upgrade all --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
