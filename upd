@@ -1,8 +1,12 @@
 #!/bin/sh
+CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 
 err_code=1
 
-echo ">>> Updating Nodejs and NPM <<<"
+echo
+echo ">>> 1. Updating Nodejs and NPM <<<"
+echo
+
 choco upgrade nodejs-lts --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
@@ -13,20 +17,36 @@ npm update --global
 if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
 
 
+echo
+echo ">>> 2. Updating Conda <<<"
+echo
 
-echo ">>> Updating Conda <<<"
 choco upgrade miniconda3 --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
 
-conda update --name=root conda --yes
+source "$CONDA_ROOT/Scripts/activate"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
+	
+	conda update --name=root conda --yes
+	if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 
-conda update --all --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
+	conda update --all --yes
+	if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
-echo ">>> Updating the rest of the Choco packages <<<"
+	conda install console_shortcut powershell_shortcut --yes
+	if [ $? -ne 0 ]; then err_code=$(($err_code * 19)); fi
+
+conda deactivate
+if [ $? -ne 0 ]; then err_code=$(($err_code * 23)); fi
+
+echo	
+echo ">>> 3. Updating the rest of the Choco packages <<<"
+echo
+
 choco upgrade all --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
+
+######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
     echo "$(date) |> FAIED with Error Code: $err_code" >> $(dirname "$0")/updater_status.log
