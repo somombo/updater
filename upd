@@ -46,6 +46,13 @@ echo
 choco upgrade all --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
 
+echo	
+echo ">>> 4. Updating wsl apt packages <<<"
+echo
+
+wsl --user root --exec sh -c "apt-get update -y && apt-get upgrade -y"
+if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
+
 ######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
