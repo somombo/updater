@@ -64,3 +64,6 @@ if [ $err_code -ne 1 ]; then
 else
     echo "$(date) |> SUCCESS" >> $LOG_FILE
 fi
+
+
+"$CURRENT_DIR/upd" --log | tail 2

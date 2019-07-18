@@ -38,7 +38,7 @@ if [[ $params ]]; then
 
 	if [ $err_code -eq 3 ]; then
     echo "  Error: Unrecognized parameter"
-		"$CURRENT_DIR/upd" -h
+		"$CURRENT_DIR/upd" --help
 		exit 2	
 	fi
 
