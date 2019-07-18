@@ -12,3 +12,17 @@ simply run the following command in cmd or powershell
 >> upd
 ```
 
+### Extra Command Line Parameters
+Here are examples of usage.
+
+For current version:
+```cmd
+>> upd -v
+>> upd --version
+```
+
+For help:
+```cmd
+>> upd -h
+>> upd --help
+```

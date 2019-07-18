@@ -1,4 +1,7 @@
 #!/bin/sh
+CURRENT_DIR="$(dirname "$0")"
+source "$CURRENT_DIR/params.sh"
+
 CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 
 err_code=1
@@ -56,8 +59,8 @@ if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
 ######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
-    echo "$(date) |> FAIED with Error Code: $err_code" >> $(dirname "$0")/updater_status.log
+    echo "$(date) |> FAIED with Error Code: $err_code" >> $LOG_FILE
     exit $err_code
 else
-    echo "$(date) |> SUCCESS" >> $(dirname "$0")/updater_status.log
+    echo "$(date) |> SUCCESS" >> $LOG_FILE
 fi
