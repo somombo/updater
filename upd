@@ -1,8 +1,9 @@
 #!/bin/sh
 CURRENT_DIR="$(dirname "$0")"
-source "$CURRENT_DIR/params.sh"
+LOG_FILE="$TEMP/somombo/updater/status.log"; mkdir -p "$(dirname $LOG_FILE)";
+VERSION=$(cat "$CURRENT_DIR/VERSION")
 
-CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
+source "$CURRENT_DIR/params.sh"
 
 err_code=1
 
@@ -27,6 +28,7 @@ echo
 choco upgrade miniconda3 --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
 
+CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 source "$CONDA_ROOT/Scripts/activate"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 	
@@ -66,4 +68,5 @@ else
 fi
 
 
-"$CURRENT_DIR/upd" --log | tail 2
+"$CURRENT_DIR/upd" --log | grep -e "\S"
+echo

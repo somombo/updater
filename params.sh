@@ -1,10 +1,7 @@
 
 #!/bin/sh
 
-CURRENT_DIR="$(dirname "$0")"
 
-LOG_FILE="$CURRENT_DIR/updater_status.log"
-VERSION=$(cat "$CURRENT_DIR/VERSION")
 
 params=$@
 if [[ $params ]]; then
@@ -39,7 +36,7 @@ if [[ $params ]]; then
 	if [ $err_code -eq 3 ]; then
     echo "  Error: Unrecognized parameter"
 		"$CURRENT_DIR/upd" --help
-		exit 2	
+		exit 1	
 	fi
 
 	exit 0
