@@ -11,7 +11,7 @@ echo
 echo ">>> 1. Updating Nodejs and NPM <<<"
 echo
 
-choco upgrade nodejs-lts --yes
+choco upgrade nodejs --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
 npm-windows-upgrade --no-spinner --version=latest
