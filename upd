@@ -61,7 +61,7 @@ if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
 ######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
-    echo "$(date) |> FAIED with Error Code: $err_code" >> $LOG_FILE
+    echo "$(date) |> FAILED with Error Code: $err_code" >> $LOG_FILE
     exit $err_code
 else
     echo "$(date) |> SUCCESS" >> $LOG_FILE
