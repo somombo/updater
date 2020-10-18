@@ -35,6 +35,8 @@ cat << 'EOF'
     23  # Could not deactivate conda
     29  # Could not chocolatey upgrade all packages
     31  # Could not wsl apt-get update and upgrade
+    37  # Could not update Rust toolchain
+    41  # Could not upgrade Deno
 
 
 EOF

@@ -58,6 +58,21 @@ echo
 wsl --user root --exec sh -c "apt-get update -y && apt-get upgrade -y"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
 
+echo	
+echo ">>> 5. Updating Rust Toolchain <<<"
+echo
+
+rustup update stable
+if [ $? -ne 0 ]; then err_code=$(($err_code * 37)); fi
+
+
+echo	
+echo ">>> 6. Upgrading Deno <<<"
+echo
+
+deno upgrade
+if [ $? -ne 0 ]; then err_code=$(($err_code * 41)); fi
+
 ######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
