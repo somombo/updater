@@ -14,7 +14,10 @@ echo
 choco upgrade nodejs --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
-npm-windows-upgrade --no-spinner --npm-version=latest
+echo "Current NPM version: $(npm --version)"
+NEXTNPM=$(npm view npm@next-7 version)
+echo "Next NPM version: $NEXTNPM"
+npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
 
 npm update --global
