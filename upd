@@ -14,7 +14,7 @@ echo
 choco upgrade nodejs --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
-npm-windows-upgrade --no-spinner --version=latest
+npm-windows-upgrade --no-spinner --npm-version=latest
 if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
 
 npm update --global
