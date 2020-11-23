@@ -14,11 +14,21 @@ echo
 choco upgrade nodejs --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
-echo "Current NPM version: $(npm --version)"
-NEXTNPM=$(npm view npm@next-7 version)
+echo 
+# xargs trims off leading and trailing whitespace
+CURRENTNPM=$(npm --version | xargs)
+echo "Current NPM version: $CURRENTNPM"
+NEXTNPM=$(npm view npm@next-7 version | xargs)
 echo "Next NPM version: $NEXTNPM"
-npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
-if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
+
+if [ $CURRENTNPM != $NEXTNPM ]; then 
+	npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
+	if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
+else
+	echo "Skipping NPM upgrade (already at latest version)."
+fi
+echo
+echo 
 
 npm update --global
 if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
@@ -54,6 +64,7 @@ echo
 choco upgrade all --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
 
+# TODO: `wsl --update` as well
 echo	
 echo ">>> 4. Updating wsl apt packages <<<"
 echo
