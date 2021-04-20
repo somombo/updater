@@ -1,4 +1,5 @@
 #!/bin/sh
+CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 CURRENT_DIR="$(dirname "$0")"
 LOG_FILE="$TEMP/somombo/updater/status.log"; mkdir -p "$(dirname $LOG_FILE)";
 VERSION=$(cat "$CURRENT_DIR/VERSION")
@@ -18,13 +19,31 @@ echo
 # xargs trims off leading and trailing whitespace
 CURRENTNPM=$(npm --version | xargs)
 echo "Current NPM version: $CURRENTNPM"
-NEXTNPM=$(npm view npm@next-7 version | xargs)
+NEXTNPM=$(npm view npm@next version | xargs)
 echo "Next NPM version: $NEXTNPM"
 
 if [ $CURRENTNPM != $NEXTNPM ]; then 
+
+# choco config set --name="'commandExecutionTimeoutSeconds'" --value="'14400'"
+# choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --passive --locale en-US --norestart"
+
+# npm install --global --force --production npm-windows-upgrade
+# npm install --global --force chai @angular/cli express-gateway firebase-tools http-server mocha nodemon ts-node tslab typescript
+
+## check 'C:\Users\makombo\AppData\Roaming\npm\node_modules'
+
+
+	### The following must only be run under the assumption that 
+	### visualstudio20XXbuildtools is already choco installed 
+	### and python (v3 preferred) is available on path 
+	# npm-windows-upgrade --npm-version latest
 	npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
+	
+	
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
+
 else
+
 	echo "Skipping NPM upgrade (already at latest version)."
 fi
 echo
@@ -41,7 +60,7 @@ echo
 choco upgrade miniconda3 --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
 
-CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
+
 source "$CONDA_ROOT/Scripts/activate"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 	
@@ -69,7 +88,7 @@ echo
 echo ">>> 4. Updating wsl apt packages <<<"
 echo
 
-wsl --user root --exec sh -c "apt-get update -y && apt-get upgrade -y"
+wsl --user root --exec sh -c "rm -rf /var/lib/apt/lists/* && apt-get update -y && apt-get upgrade -y"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
 
 echo	
