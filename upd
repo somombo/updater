@@ -49,6 +49,9 @@ fi
 echo
 echo 
 
+npm outdated -g --depth 0
+echo
+echo
 npm update --global
 if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
 
