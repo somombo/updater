@@ -86,20 +86,24 @@ echo
 choco upgrade all --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
 
-# TODO: `wsl --update` as well
 echo	
-echo ">>> 4. Updating wsl apt packages <<<"
+echo ">>> 4. Updating wsl and apt packages <<<"
 echo
 
-wsl --user root --exec sh -c "rm -rf /var/lib/apt/lists/* && apt-get update -y && apt-get upgrade -y"
+wsl --update
 if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
+
+wsl --shutdown  # since change will take effect on the next full restart of WSL
+
+wsl --user root --exec sh -c "rm -rf /var/lib/apt/lists/* && apt-get update -y && apt-get upgrade -y"
+if [ $? -ne 0 ]; then err_code=$(($err_code * 37)); fi
 
 echo	
 echo ">>> 5. Updating Rust Toolchain <<<"
 echo
 
 rustup update stable
-if [ $? -ne 0 ]; then err_code=$(($err_code * 37)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 41)); fi
 
 
 echo	
@@ -107,7 +111,7 @@ echo ">>> 6. Upgrading Deno <<<"
 echo
 
 deno upgrade
-if [ $? -ne 0 ]; then err_code=$(($err_code * 41)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 43)); fi
 
 ######################### Results ########################
 

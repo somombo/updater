@@ -34,9 +34,10 @@ cat << 'EOF'
     19  # Could not conda install console and powershell shortcuts
     23  # Could not deactivate conda
     29  # Could not chocolatey upgrade all packages
-    31  # Could not wsl apt-get update and upgrade
-    37  # Could not update Rust toolchain
-    41  # Could not upgrade Deno
+    31  # Could not update wsl kernel
+    37  # Could not apt update and apt upgrade in wsl
+    41  # Could not update Rust toolchain
+    43  # Could not upgrade Deno
 
 
 EOF
