@@ -12,14 +12,14 @@ echo
 echo ">>> 1. Updating Nodejs and NPM <<<"
 echo
 
-choco upgrade nodejs --yes
+choco upgrade nodejs-lts --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
 echo 
 # xargs trims off leading and trailing whitespace
 CURRENTNPM=$(npm --version | xargs)
 echo "Current NPM version: $CURRENTNPM"
-NEXTNPM=$(npm view npm@next version | xargs)
+NEXTNPM=$(npm view npm@latest version | xargs)
 echo "Next NPM version: $NEXTNPM"
 
 if [ $CURRENTNPM != $NEXTNPM ]; then 
