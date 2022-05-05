@@ -113,6 +113,13 @@ echo
 deno upgrade
 if [ $? -ne 0 ]; then err_code=$(($err_code * 43)); fi
 
+echo	
+echo ">>> 7. Updating Git for Windows <<<"
+echo
+
+git update-git-for-windows --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 47)); fi
+
 ######################### Results ########################
 
 if [ $err_code -ne 1 ]; then
