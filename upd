@@ -56,54 +56,61 @@ npm update --global
 if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
 
 
+echo	
+echo ">>> 7. Updating Git for Windows <<<"
+echo
+
+git update-git-for-windows --yes
+if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
+
 echo
 echo ">>> 2. Updating Conda <<<"
 echo
 
 choco upgrade miniconda3 --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 
 
 source "$CONDA_ROOT/Scripts/activate"
-if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 	
 	conda update --name=root conda --yes
-	if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
-
-	conda update --all --yes
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
-	conda install console_shortcut powershell_shortcut --yes
+	conda update --all --yes
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 19)); fi
 
+	conda install console_shortcut powershell_shortcut --yes
+	if [ $? -ne 0 ]; then err_code=$(($err_code * 23)); fi
+
 conda deactivate
-if [ $? -ne 0 ]; then err_code=$(($err_code * 23)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
 
 echo	
 echo ">>> 3. Updating the rest of the Choco packages <<<"
 echo
 
 choco upgrade all --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
 
 echo	
 echo ">>> 4. Updating wsl and apt packages <<<"
 echo
 
 wsl --update
-if [ $? -ne 0 ]; then err_code=$(($err_code * 31)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 37)); fi
 
 wsl --shutdown  # since change will take effect on the next full restart of WSL
 
 wsl --user root --exec sh -c "rm -rf /var/lib/apt/lists/* && apt-get update -y && apt-get upgrade -y"
-if [ $? -ne 0 ]; then err_code=$(($err_code * 37)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 41)); fi
 
 echo	
 echo ">>> 5. Updating Rust Toolchain <<<"
 echo
 
 rustup update stable
-if [ $? -ne 0 ]; then err_code=$(($err_code * 41)); fi
+if [ $? -ne 0 ]; then err_code=$(($err_code * 43)); fi
 
 
 echo	
@@ -111,13 +118,6 @@ echo ">>> 6. Upgrading Deno <<<"
 echo
 
 deno upgrade
-if [ $? -ne 0 ]; then err_code=$(($err_code * 43)); fi
-
-echo	
-echo ">>> 7. Updating Git for Windows <<<"
-echo
-
-git update-git-for-windows --yes
 if [ $? -ne 0 ]; then err_code=$(($err_code * 47)); fi
 
 ######################### Results ########################
