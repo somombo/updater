@@ -1,5 +1,7 @@
 #!/bin/sh
-CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
+
+# CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> <-- Deprecate: Used to be this now this vv
+CONDA_ROOT="/c/ProgramData/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 CURRENT_DIR="$(dirname "$0")"
 LOG_FILE="$TEMP/somombo/updater/status.log"; mkdir -p "$(dirname $LOG_FILE)";
 VERSION=$(cat "$CURRENT_DIR/VERSION")
@@ -9,59 +11,59 @@ source "$CURRENT_DIR/params.sh"
 err_code=1
 
 echo
-echo ">>> 1. Updating Nodejs and NPM <<<"
-echo
+# echo ">>> 1. Updating Nodejs and NPM <<<"
+# echo
 
-choco upgrade nodejs-lts --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
+# choco upgrade nodejs-lts --yes
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 2)); fi
 
-echo 
-# xargs trims off leading and trailing whitespace
-CURRENTNPM=$(npm --version | xargs)
-echo "Current NPM version: $CURRENTNPM"
-NEXTNPM=$(npm view npm@latest version | xargs)
-echo "Next NPM version: $NEXTNPM"
+# echo 
+# # xargs trims off leading and trailing whitespace
+# CURRENTNPM=$(npm --version | xargs)
+# echo "Current NPM version: $CURRENTNPM"
+# NEXTNPM=$(npm view npm@latest version | xargs)
+# echo "Next NPM version: $NEXTNPM"
 
-if [ $CURRENTNPM != $NEXTNPM ]; then 
+# if [ $CURRENTNPM != $NEXTNPM ]; then 
 
-# choco config set --name="'commandExecutionTimeoutSeconds'" --value="'14400'"
-# choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --passive --locale en-US --norestart"
+# # choco config set --name="'commandExecutionTimeoutSeconds'" --value="'14400'"
+# # choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --passive --locale en-US --norestart"
 
-# npm install --global --force --production npm-windows-upgrade
-# npm install --global --force chai @angular/cli express-gateway firebase-tools http-server mocha nodemon ts-node tslab typescript
+# # npm install --global --force --production npm-windows-upgrade
+# # npm install --global --force chai @angular/cli express-gateway firebase-tools http-server mocha nodemon ts-node tslab typescript
 
-## check 'C:\Users\makombo\AppData\Roaming\npm\node_modules'
+# ## check 'C:\Users\makombo\AppData\Roaming\npm\node_modules'
 
 
-	### The following must only be run under the assumption that 
-	### visualstudio20XXbuildtools is already choco installed 
-	### and python (v3 preferred) is available on path 
-	# npm-windows-upgrade --npm-version latest
-	npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
+# 	### The following must only be run under the assumption that 
+# 	### visualstudio20XXbuildtools is already choco installed 
+# 	### and python (v3 preferred) is available on path 
+# 	# npm-windows-upgrade --npm-version latest
+# 	npm-windows-upgrade --no-spinner --npm-path "C:\Program Files\nodejs" --npm-version="$NEXTNPM"
 	
 	
-	if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
+# 	if [ $? -ne 0 ]; then err_code=$(($err_code * 3)); fi
 
-else
+# else
 
-	echo "Skipping NPM upgrade (already at latest version)."
-fi
-echo
-echo 
+# 	echo "Skipping NPM upgrade (already at latest version)."
+# fi
+# echo
+# echo 
 
-npm outdated -g --depth 0
-echo
-echo
-npm update --global
-if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
+# npm outdated -g --depth 0
+# echo
+# echo
+# npm update --global
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 5)); fi
 
 
-echo	
-echo ">>> 7. Updating Git for Windows <<<"
-echo
+# echo	
+# echo ">>> 7. Updating Git for Windows <<<"
+# echo
 
-git update-git-for-windows --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
+# git update-git-for-windows --yes
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 7)); fi
 
 echo
 echo ">>> 2. Updating Conda <<<"
