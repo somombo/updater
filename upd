@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> <-- Deprecate: Used to be this now this vv
-CONDA_ROOT="/c/ProgramData/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
+CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> <-- Deprecate: Used to be this now this vv
+# CONDA_ROOT="/c/ProgramData/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 CURRENT_DIR="$(dirname "$0")"
 LOG_FILE="$TEMP/somombo/updater/status.log"; mkdir -p "$(dirname $LOG_FILE)";
 VERSION=$(cat "$CURRENT_DIR/VERSION")
@@ -76,7 +76,8 @@ if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 source "$CONDA_ROOT/Scripts/activate"
 if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 	
-	conda update --name=root conda --yes
+	# conda update --name=root conda --yes
+	conda update --name=base --channel=conda-forge conda  --yes
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
 	conda update --all --yes
