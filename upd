@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> <-- Deprecate: Used to be this now this vv
+# CONDA_ROOT="/c/tools/miniconda3" #TODO: Somo> <-- Deprecate: Used to be this now this vv
 # CONDA_ROOT="/c/ProgramData/miniconda3" #TODO: Somo> Find a way to not depend on hard coded $CONDA_ROOT path
 CURRENT_DIR="$(dirname "$0")"
 LOG_FILE="$TEMP/somombo/updater/status.log"; mkdir -p "$(dirname $LOG_FILE)";
@@ -69,25 +69,27 @@ echo
 echo ">>> 2. Updating Conda <<<"
 echo
 
-choco upgrade miniconda3 --yes
-if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
+############# Install miniconda3 directly from https://www.anaconda.com/download/success  ###
+
+# choco upgrade miniconda3 --yes
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 11)); fi
 
 
-source "$CONDA_ROOT/Scripts/activate"
-if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
+# source "$CONDA_ROOT/Scripts/activate"
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 13)); fi
 	
 	# conda update --name=root conda --yes
-	conda update --name=base --channel=conda-forge conda  --yes
+	conda update --name=base --channel=defaults conda  --yes
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 17)); fi
 
 	conda update --all --yes
 	if [ $? -ne 0 ]; then err_code=$(($err_code * 19)); fi
 
-	conda install console_shortcut powershell_shortcut --yes
-	if [ $? -ne 0 ]; then err_code=$(($err_code * 23)); fi
+	# conda install console_shortcut powershell_shortcut --yes
+	# if [ $? -ne 0 ]; then err_code=$(($err_code * 23)); fi
 
-conda deactivate
-if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
+# conda deactivate
+# if [ $? -ne 0 ]; then err_code=$(($err_code * 29)); fi
 
 echo	
 echo ">>> 3. Updating the rest of the Choco packages <<<"
